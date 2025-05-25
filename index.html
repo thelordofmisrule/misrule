@@ -7,16 +7,21 @@
 </head>
 <body>
   <h1>The Lord of Misrule</h1>
-  <div id="main">
-    <div id="leftbar">
+  <div id="layout">
+    <!-- Left: Article List -->
+    <aside id="leftbar">
       <h2>Articles</h2>
       <ul id="article-list">Loading...</ul>
-    </div>
+    </aside>
 
-    <div id="content">
+    <!-- Center: Recent Snippets -->
+    <main id="center">
       <h2>Recent Posts</h2>
       <div id="recent-posts">Loading recent posts...</div>
+    </main>
 
+    <!-- Right: Twitter + Blogroll -->
+    <aside id="rightbar">
       <div id="twitter-box">
         <h2>Twitter</h2>
         <a class="twitter-timeline" href="https://twitter.com/misruleBeMyGod">
@@ -32,8 +37,9 @@
         <li><a href="https://theworthyhouse.com">The Worthy House</a></li>
         <li><a href="https://unherd.com">UnHerd</a></li>
       </ul>
-    </div>
+    </aside>
   </div>
+
   <script src="/recent.js"></script>
 </body>
 </html>

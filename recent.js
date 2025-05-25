@@ -4,12 +4,14 @@ const articleListContainer = document.getElementById('article-list');
 fetch('/articles/index.json')
   .then(response => response.json())
   .then(data => {
-    const articles = data.slice(0, 5);
+    // Fill leftbar list
     const articleLinks = data.map(article => 
       `<li><a href="/articles/${article.filename}">${article.title}</a></li>`
     ).join('');
-    articleListContainer.innerHTML = `<ul>${articleLinks}</ul>`;
+    articleListContainer.innerHTML = articleLinks;
 
+    // Show top 5 posts in center
+    const articles = data.slice(0, 5);
     articles.forEach(article => {
       fetch(`/articles/${article.filename}`)
         .then(res => res.text())

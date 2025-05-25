@@ -1,6 +1,6 @@
 body {
   font-family: serif;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 2em auto;
   padding: 0 1em;
   background: #fff;
@@ -16,36 +16,35 @@ a {
   text-decoration: underline;
 }
 
-nav a {
-  margin-right: 1em;
-}
-
-audio {
-  width: 100%;
-  margin: 1em 0;
-}
-
-#main {
-  display: flex;
+#layout {
+  display: grid;
+  grid-template-columns: 1fr 2.5fr 1.5fr;
   gap: 2em;
 }
 
 #leftbar {
-  flex: 1;
   border-right: 1px solid #ccc;
   padding-right: 1em;
 }
 
-#content {
-  flex: 3;
+#rightbar {
+  border-left: 1px solid #ccc;
+  padding-left: 1em;
 }
 
 #twitter-box {
   max-height: 400px;
   overflow: hidden;
+  margin-bottom: 2em;
 }
 
 .twitter-timeline {
   max-height: 400px !important;
   overflow-y: auto !important;
+}
+
+.post-snippet {
+  margin-bottom: 2em;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1em;
 }
