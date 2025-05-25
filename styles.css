@@ -6,29 +6,46 @@ body {
   background: #fff;
   color: #000;
 }
+
 h1, h2, h3 {
   font-weight: normal;
 }
+
 a {
   color: blue;
   text-decoration: underline;
 }
+
 nav a {
   margin-right: 1em;
 }
+
 audio {
   width: 100%;
   margin: 1em 0;
 }
+
 #main {
   display: flex;
   gap: 2em;
 }
+
 #content {
   flex: 3;
 }
+
 #sidebar {
   flex: 1;
   border-left: 1px solid #ccc;
   padding-left: 1em;
+}
+
+#twitter-box {
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.twitter-timeline {
+  max-height: 400px !important;
+  overflow-y: auto !important;
 }
