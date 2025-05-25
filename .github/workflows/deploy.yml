@@ -20,6 +20,6 @@ jobs:
         username: ${{ secrets.VPS_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          cd /home/blackbird/sites/misrule
+          cd /home/blackbird/sites/misrule/misrule
           git pull origin main
 
