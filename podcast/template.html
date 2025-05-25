@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <article class="podcast">
+    <h1>{{ title }}</h1>
+    <p class="date">{{ date }}</p>
+    <audio controls>
+      <source src="{{ audio_url }}" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <div class="shownotes">
+      {{ content }}
+    </div>
+  </article>
+</body>
+</html>

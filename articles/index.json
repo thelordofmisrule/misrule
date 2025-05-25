@@ -1,26 +1,32 @@
 [
   {
     "filename": "2025-05-25-sample-post-1.html",
-    "title": "Sample Post 1"
+    "title": "Sample Post 1",
+    "date": "2025-05-25"
   },
   {
     "filename": "2025-05-22-sample-post-2.html",
-    "title": "Sample Post 2"
+    "title": "Sample Post 2",
+    "date": "2025-05-22"
   },
   {
     "filename": "2025-05-19-sample-post-3.html",
-    "title": "Sample Post 3"
+    "title": "Sample Post 3",
+    "date": "2025-05-19"
   },
   {
     "filename": "2025-05-16-sample-post-4.html",
-    "title": "Sample Post 4"
+    "title": "Sample Post 4",
+    "date": "2025-05-16"
   },
   {
     "filename": "2025-05-13-sample-post-5.html",
-    "title": "Sample Post 5"
+    "title": "Sample Post 5",
+    "date": "2025-05-13"
   },
   {
     "filename": "2025-05-10-sample-post-6.html",
-    "title": "Sample Post 6"
+    "title": "Sample Post 6",
+    "date": "2025-05-10"
   }
 ]
