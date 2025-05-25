@@ -1,6 +1,6 @@
 body {
   font-family: serif;
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 2em auto;
   padding: 0 1em;
   background: #fff;
@@ -30,14 +30,14 @@ audio {
   gap: 2em;
 }
 
-#content {
-  flex: 3;
+#leftbar {
+  flex: 1;
+  border-right: 1px solid #ccc;
+  padding-right: 1em;
 }
 
-#sidebar {
-  flex: 1;
-  border-left: 1px solid #ccc;
-  padding-left: 1em;
+#content {
+  flex: 3;
 }
 
 #twitter-box {
