@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Joshua’s Dispatches</title>
+    <link>https://yourdomain.com/podcast/</link>
+    <description>A podcast on old books, old wars, and the ghosts of empire.</description>
+    <language>en-us</language>
+
+    <item>
+      <title>Episode 1: The Venice Hypothesis</title>
+      <link>https://yourdomain.com/podcast/ep01-title.html</link>
+      <description>A look at Venice as the blueprint for London's rise.</description>
+      <enclosure url="https://yourdomain.com/podcast/audio/ep01.mp3" type="audio/mpeg"/>
+      <guid>ep01</guid>
+      <pubDate>Sun, 25 May 2025 00:00:00 GMT</pubDate>
+    </item>
+
+  </channel>
+</rss>

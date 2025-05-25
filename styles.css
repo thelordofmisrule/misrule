@@ -1,0 +1,22 @@
+body {
+  font-family: serif;
+  max-width: 700px;
+  margin: 2em auto;
+  padding: 0 1em;
+  background: #fff;
+  color: #000;
+}
+h1, h2, h3 {
+  font-weight: normal;
+}
+a {
+  color: blue;
+  text-decoration: underline;
+}
+nav a {
+  margin-right: 1em;
+}
+audio {
+  width: 100%;
+  margin: 1em 0;
+}
