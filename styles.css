@@ -1,6 +1,6 @@
 body {
   font-family: serif;
-  max-width: 700px;
+  max-width: 1100px;
   margin: 2em auto;
   padding: 0 1em;
   background: #fff;
@@ -19,4 +19,16 @@ nav a {
 audio {
   width: 100%;
   margin: 1em 0;
+}
+#main {
+  display: flex;
+  gap: 2em;
+}
+#content {
+  flex: 3;
+}
+#sidebar {
+  flex: 1;
+  border-left: 1px solid #ccc;
+  padding-left: 1em;
 }

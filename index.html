@@ -2,15 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Misrule</title>
+  <title>The Journal of Misrule</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <h1>The Misrule Podcast</h1>
-  <nav>
-    <a href="/articles/">Articles</a> |
-    <a href="/podcast/">Podcast</a>
-  </nav>
-  <p>Essays, audio dispatches, more</p>
+  <h1>The Journal of Misrule</h1>
+  <div id="main">
+    <div id="content">
+      <h2>Most Recent Article</h2>
+      <div id="recent-article">Loading latest article...</div>
+    </div>
+    <div id="sidebar">
+      <h2>Twitter</h2>
+      <a class="twitter-timeline" href="https://twitter.com/misruleBeMyGod">Tweets by misruleBeMyGod</a>
+      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+      <h2>Blogroll</h2>
+      <ul>
+        <li><a href="https://graymirror.substack.com">Gray Mirror</a></li>
+        <li><a href="https://astralcodexten.substack.com">Astral Codex Ten</a></li>
+        <li><a href="https://theworthyhouse.com">The Worthy House</a></li>
+        <li><a href="https://unherd.com">UnHerd</a></li>
+      </ul>
+    </div>
+  </div>
+  <script src="/recent.js"></script>
 </body>
 </html>
