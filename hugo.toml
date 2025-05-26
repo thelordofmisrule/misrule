@@ -1,7 +1,6 @@
 baseURL = "https://misrule.me/"
 title = "The Lord of Misrule"
 languageCode = "en-us"
-theme = ""
 enableRobotsTXT = true
 
 [markup]
