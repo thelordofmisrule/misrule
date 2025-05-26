@@ -1,0 +1,20 @@
+/* ─── layout ─────────────────────────────────────────────── */
+#layout{
+  display:grid;
+  grid-template-columns:1fr 2.5fr 1.5fr;
+  gap:2em;
+}
+
+/* ─── columns ────────────────────────────────────────────── */
+#leftbar {border-right:1px solid #ccc;padding-right:1em;}
+#rightbar{border-left:1px solid #ccc;padding-left:1em;}
+
+/* ─── general look ───────────────────────────────────────── */
+body{font-family:serif;max-width:1300px;margin:2em auto;padding:0 1em;color:#000;background:#fff;}
+h1,h2,h3{font-weight:normal;}a{color:blue;text-decoration:underline;}
+header{border-bottom:1px solid #ccc;margin-bottom:1em;padding-bottom:.5em;}
+
+/* ─── widgets ────────────────────────────────────────────── */
+#twitter-box{max-height:400px;overflow:hidden;margin-bottom:2em;}
+.twitter-timeline{max-height:400px!important;overflow-y:auto!important;}
+.post-snippet{margin-bottom:2em;border-bottom:1px solid #ddd;padding-bottom:1em;}
