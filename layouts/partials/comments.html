@@ -1,7 +1,30 @@
 <section id="isso-thread"></section>
+
+<!-- Isso script (keeps its default CSS) -->
 <script
   data-isso="https://comments.misrule.me/"
   src="https://comments.misrule.me/js/embed.min.js">
 </script>
 
+<!-- Our overrides load *after* isso.css, so they always win -->
+<style>
+/* hide every “(optional)” span */
+#isso-thread label span.option{display:none!important}
 
+/* red * on required labels */
+#isso-thread label[for="author"]::after,
+#isso-thread label[for="email"]::after{content:" *";color:#c00}
+
+/* align inputs + buttons on one row */
+#isso-thread .isso-input-wrapper,
+#isso-thread .isso-submit{
+  display:flex!important;
+  flex-wrap:wrap;
+  gap:.6em;
+  align-items:center;
+  margin-top:1em
+}
+
+/* website field width */
+#isso-thread input[name="website"]{flex:0 0 18em}
+</style>
