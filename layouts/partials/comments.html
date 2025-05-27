@@ -29,12 +29,12 @@
 /* Make auth fields and buttons align horizontally with more spacing */
 #isso-thread .isso-auth-section {
   display: inline-block !important;
-  margin-right: 2em;
+  margin-right: 2.5em;
 }
 
 #isso-thread .isso-auth-section > div {
   display: inline-block;
-  margin-right: 2em;
+  margin-right: 2.5em;
 }
 
 #isso-thread .isso-post-action {
@@ -74,6 +74,12 @@ function removeOptionalText() {
   optionalSpans.forEach(function(span) {
     span.style.display = 'none';
   });
+  
+  // Change email placeholder
+  var emailInput = document.querySelector('#isso-thread input[type="email"]');
+  if (emailInput) {
+    emailInput.placeholder = 'jdoe@example.com';
+  }
 }
 
 // Run when page loads
