@@ -7,110 +7,17 @@
   src="https://comments.misrule.me/js/embed.min.js">
 </script>
 
-<!-- Isso styling fixes -->
+<!-- minimal fix-ups loaded AFTER isso -->
 <style>
-/* Hide optional/required text - comprehensive targeting */
-#isso-thread span.optional,
-#isso-thread span.required,
-#isso-thread .optional,
-#isso-thread .required {
-  display: none !important;
-  visibility: hidden !important;
-  font-size: 0 !important;
-  width: 0 !important;
-  height: 0 !important;
-  position: absolute !important;
-  left: -9999px !important;
-}
-
-/* Also hide any span inside labels that might contain optional */
-#isso-thread label span {
+/* hide optional text */
+#isso-thread span.optional {
   display: none !important;
 }
 
-/* Add red asterisk to required fields */
+/* red asterisk on required */
 #isso-thread label[for="isso-postbox-author"]:after,
 #isso-thread label[for="isso-postbox-email"]:after {
   content: " *";
-  color: red;
-  display: inline !important;
-  visibility: visible !important;
-  font-size: inherit !important;
-  position: static !important;
-}
-
-/* Auth section layout */
-#isso-thread .auth-section,
-#isso-thread .isso-auth-section {
-  display: flex !important;
-  gap: 1.5em;
-  margin: 1em 0;
-  flex-wrap: wrap;
-  align-items: flex-end;
-}
-
-/* Make input wrappers take up space properly */
-#isso-thread .auth-section > div,
-#isso-thread .isso-auth-section > div,
-#isso-thread .input-wrapper,
-#isso-thread .isso-input-wrapper {
-  flex: 1;
-  min-width: 250px;
-}
-
-/* Input fields full width within their containers */
-#isso-thread input[type="text"],
-#isso-thread input[type="email"],
-#isso-thread input[name="website"] {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.4em 0.6em;
-  font-size: 0.95rem;
-}
-
-/* Ensure labels don't get covered */
-#isso-thread .auth-section label,
-#isso-thread .isso-auth-section label {
-  display: block;
-  margin-bottom: 0.3em;
-}
-
-/* Button alignment */
-#isso-thread .post-action,
-#isso-thread .isso-post-action {
-  display: flex;
-  gap: 1em;
-  margin-top: 1em;
-  align-items: center;
-}
-
-/* Style the buttons */
-#isso-thread input[type="submit"],
-#isso-thread input[type="button"],
-#isso-thread button {
-  padding: 0.5em 1.2em;
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* Target text nodes that might contain (optional) by making their container tiny */
-#isso-thread label {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 640px) {
-  #isso-thread .auth-section,
-  #isso-thread .isso-auth-section {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  #isso-thread .auth-section > div,
-  #isso-thread .isso-auth-section > div {
-    width: 100%;
-  }
+  color: #c00;
 }
 </style>
