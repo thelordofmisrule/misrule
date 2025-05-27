@@ -9,7 +9,7 @@
 
 {{ define "main" }}
 <h2>Recent Posts</h2>
-{{ range first 5 (where .Site.RegularPages "Type" "in" (slice "poetry" "commentary")) }}
+{{ range first 5 (where .Site.RegularPages "Type" "in" (slice "essays" "podcast" "poetry" "commentary")) }}
   <div class="post-snippet">
     <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
     <p>{{ .Summary }}</p>
