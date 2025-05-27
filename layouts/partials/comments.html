@@ -7,60 +7,6 @@
   src="https://comments.misrule.me/js/embed.min.js">
 </script>
 
-<!-- JavaScript to clean up Isso's markup -->
-<script>
-// Wait for Isso to load and clean up the form
-window.addEventListener('load', function() {
-  // Function to clean up Isso form
-  function cleanIssoForm() {
-    // Remove all instances of (optional) text
-    const optionalSpans = document.querySelectorAll('#isso-thread span.optional, #isso-thread span.required');
-    optionalSpans.forEach(span => {
-      span.style.display = 'none';
-      span.textContent = '';
-    });
-    
-    // Also check for text nodes containing (optional)
-    const walker = document.createTreeWalker(
-      document.getElementById('isso-thread'),
-      NodeFilter.SHOW_TEXT,
-      null,
-      false
-    );
-    
-    let node;
-    while(node = walker.nextNode()) {
-      if(node.textContent.includes('(optional)') || node.textContent.includes('(required)')) {
-        node.textContent = node.textContent.replace(/\s*\(optional\)\s*/g, '').replace(/\s*\(required\)\s*/g, '');
-      }
-    }
-    
-    // Ensure labels are properly formatted
-    const labels = document.querySelectorAll('#isso-thread label');
-    labels.forEach(label => {
-      // Clean up label text
-      if(label.textContent.includes('(')) {
-        label.childNodes.forEach(child => {
-          if(child.nodeType === 3) { // Text node
-            child.textContent = child.textContent.replace(/\s*\([^)]*\)\s*/g, '');
-          }
-        });
-      }
-    });
-  }
-  
-  // Run cleanup after a delay to ensure Isso has loaded
-  setTimeout(cleanIssoForm, 100);
-  
-  // Also run when new elements are added (for replies)
-  const observer = new MutationObserver(cleanIssoForm);
-  const issoThread = document.getElementById('isso-thread');
-  if(issoThread) {
-    observer.observe(issoThread, { childList: true, subtree: true });
-  }
-});
-</script>
-
 <!-- Comprehensive Isso styling fix -->
 <style>
 /* Reset and base styles */
@@ -399,3 +345,70 @@ window.addEventListener('load', function() {
   overflow: hidden;
 }
 </style>
+
+<!-- JavaScript to clean up Isso's markup -->
+<script>
+// Wait for Isso to fully load before cleaning up
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', cleanupIsso);
+} else {
+  // If DOM is already loaded, wait a bit for Isso to initialize
+  setTimeout(cleanupIsso, 500);
+}
+
+function cleanupIsso() {
+  // Function to remove optional/required text
+  function removeOptionalText() {
+    // Try to find Isso form elements
+    const issoThread = document.getElementById('isso-thread');
+    if (!issoThread) return;
+    
+    // Remove all instances of (optional) or (required) text
+    const walker = document.createTreeWalker(
+      issoThread,
+      NodeFilter.SHOW_TEXT,
+      null,
+      false
+    );
+    
+    const nodesToUpdate = [];
+    let node;
+    
+    while (node = walker.nextNode()) {
+      if (node.nodeValue && (node.nodeValue.includes('(optional)') || node.nodeValue.includes('(required)'))) {
+        nodesToUpdate.push(node);
+      }
+    }
+    
+    nodesToUpdate.forEach(node => {
+      node.nodeValue = node.nodeValue.replace(/\s*\(optional\)\s*/g, '').replace(/\s*\(required\)\s*/g, '');
+    });
+    
+    // Also hide any spans with these classes
+    const spans = issoThread.querySelectorAll('span.optional, span.required');
+    spans.forEach(span => {
+      span.style.display = 'none';
+    });
+  }
+  
+  // Run the cleanup
+  removeOptionalText();
+  
+  // Set up observer for dynamic content
+  const issoThread = document.getElementById('isso-thread');
+  if (issoThread) {
+    const observer = new MutationObserver(function(mutations) {
+      // Only run if new nodes were added
+      const hasNewNodes = mutations.some(mutation => mutation.addedNodes.length > 0);
+      if (hasNewNodes) {
+        removeOptionalText();
+      }
+    });
+    
+    observer.observe(issoThread, { 
+      childList: true, 
+      subtree: true 
+    });
+  }
+}
+</script>
