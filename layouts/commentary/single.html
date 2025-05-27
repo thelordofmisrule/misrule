@@ -1,0 +1,22 @@
+{{ define "leftbar" }}
+<h2>Commentaries</h2>
+<ul>
+  {{ range where .Site.RegularPages "Type" "commentary" }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+</ul>
+{{ end }}
+
+{{ define "main" }}
+<article class="commentary">
+  <h1>{{ .Title }}</h1>
+  {{ with .Params.poem_ref }}
+    <p><em>On the poem:</em> <a href="{{ . }}">{{ . }}</a></p>
+  {{ end }}
+  <div class="crit-body">{{ .Content }}</div>
+</article>
+{{ end }}
+
+{{ define "rightbar" }}
+{{ partial "right-widget.html" . }}
+{{ end }}

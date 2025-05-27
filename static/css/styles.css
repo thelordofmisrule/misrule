@@ -18,3 +18,27 @@ header{border-bottom:1px solid #ccc;margin-bottom:1em;padding-bottom:.5em;}
 #twitter-box{max-height:400px;overflow:hidden;margin-bottom:2em;}
 .twitter-timeline{max-height:400px!important;overflow-y:auto!important;}
 .post-snippet{margin-bottom:2em;border-bottom:1px solid #ddd;padding-bottom:1em;}
+
+/* === Poetry look ==================================================== */
+.poem h1 {
+  font-family: "IM Fell English SC", serif;
+  letter-spacing: 0.5px;
+  font-size: 2.2rem;
+  margin-bottom: 0.3em;
+}
+
+.poetry {
+  font-family: "IM Fell English", serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  max-width: 38em;            /* narrow column like 17th-c. page */
+  margin: 0 auto;
+  white-space: pre-wrap;      /* preserves stanza breaks */
+}
+
+.poetry em,
+.poetry strong {
+  font-style: italic;
+  font-weight: normal;        /* keep italics delicate */
+}
+

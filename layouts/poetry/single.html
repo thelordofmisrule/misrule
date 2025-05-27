@@ -1,7 +1,20 @@
+{{ define "leftbar" }}
+<h2>All Poems</h2>
+<ul>
+  {{ range where .Site.RegularPages "Type" "poetry" }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+</ul>
+{{ end }}
+
 {{ define "main" }}
-<article>
+<article class="poem">
   <h1>{{ .Title }}</h1>
-  <p><em>{{ .Date.Format "January 2, 2006" }}</em></p>
-  <div>{{ .Content }}</div>
+  <p class="meta">{{ .Params.form | title }} — {{ .Params.meter }}</p>
+  <div class="poetry">{{ .Content }}</div>
 </article>
+{{ end }}
+
+{{ define "rightbar" }}
+{{ partial "right-widget.html" . }}
 {{ end }}
