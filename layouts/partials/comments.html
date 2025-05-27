@@ -9,10 +9,30 @@
 
 <!-- minimal fix-ups loaded AFTER isso -->
 <style>
-/* hide optional text - target the actual text */
-#isso-thread .optional {
-  font-size: 0 !important;
-  color: transparent !important;
+/* hide optional text - more aggressive */
+#isso-thread .optional,
+#isso-thread span:contains("(optional)") {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* target the actual text if it's not in a span */
+#isso-thread label {
+  font-size: inherit;
+}
+
+#isso-thread label * {
+  font-size: inherit;
+}
+
+/* hide text nodes containing (optional) by making them invisible */
+#isso-thread label {
+  color: #555;
+}
+
+#isso-thread label .optional {
+  position: absolute !important;
+  left: -9999px !important;
 }
 
 /* red asterisk on required */
@@ -24,20 +44,23 @@
 
 /* align auth fields horizontally */
 #isso-thread .isso-auth-section {
-  display: flex;
-  gap: 1em;
+  display: flex !important;
+  gap: 1.5em;
   flex-wrap: wrap;
   align-items: flex-end;
+  margin: 1em 0;
 }
 
 #isso-thread .isso-auth-section > * {
-  flex: 1;
-  min-width: 200px;
+  flex: 1 1 250px;
 }
 
 /* align buttons with the form */
 #isso-thread .isso-post-action {
+  display: flex;
+  gap: 1em;
   margin-top: 1em;
+  align-items: center;
 }
 
 /* make input fields consistent width */
@@ -47,4 +70,24 @@
   width: 100%;
   box-sizing: border-box;
 }
+
+/* ensure proper spacing */
+#isso-thread .isso-auth-section label {
+  display: block;
+  margin-bottom: 0.3em;
+}
 </style>
+
+<!-- Small script to remove (optional) text after Isso loads -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    var labels = document.querySelectorAll('#isso-thread label');
+    labels.forEach(function(label) {
+      if (label.innerHTML.includes('(optional)')) {
+        label.innerHTML = label.innerHTML.replace(/\s*\(optional\)\s*/g, '');
+      }
+    });
+  }, 500);
+});
+</script>
