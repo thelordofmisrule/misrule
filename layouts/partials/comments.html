@@ -3,3 +3,13 @@
   data-isso="https://comments.misrule.me/"
   src="https://comments.misrule.me/js/embed.min.js">
 </script>
+
+<script>
+/* after Isso loads, fix labels */
+document.addEventListener('DOMContentLoaded', () => {
+  const name = document.querySelector('#isso-thread label[for="author"]');
+  const mail = document.querySelector('#isso-thread label[for="email"]');
+  if (name)  name.innerHTML  = 'Name<span class="required">*</span>';
+  if (mail)  mail.innerHTML  = 'E-mail<span class="required">*</span>';
+});
+</script>
