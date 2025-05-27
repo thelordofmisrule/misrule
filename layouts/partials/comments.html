@@ -7,137 +7,77 @@
   src="https://comments.misrule.me/js/embed.min.js">
 </script>
 
-<!-- minimal fix-ups loaded AFTER isso -->
+<!-- Fix Isso styling -->
 <style>
-/* hide optional text - more aggressive */
-#isso-thread .optional,
-#isso-thread span:contains("(optional)") {
+/* Keep original thread width */
+#isso-thread {
+  max-width: 100%;
+}
+
+/* Hide ALL optional text */
+#isso-thread .optional {
   display: none !important;
-  visibility: hidden !important;
 }
 
-/* target the actual text if it's not in a span */
-#isso-thread label {
-  font-size: inherit;
-}
-
-#isso-thread label * {
-  font-size: inherit;
-}
-
-/* hide text nodes containing (optional) by making them invisible */
-#isso-thread label {
-  color: #555;
-}
-
-#isso-thread label .optional {
-  position: absolute !important;
-  left: -9999px !important;
-}
-
-/* red asterisk on required */
+/* Red asterisk for required fields */
 #isso-thread label[for="isso-postbox-author"]:after,
 #isso-thread label[for="isso-postbox-email"]:after {
   content: " *";
   color: #c00;
 }
 
-/* align auth fields horizontally */
+/* Make auth fields and buttons align horizontally */
 #isso-thread .isso-auth-section {
-  display: flex !important;
-  gap: 1.5em;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  margin: 1em 0;
+  display: inline-block !important;
+  margin-right: 1em;
 }
 
-#isso-thread .isso-auth-section > * {
-  flex: 1 1 250px;
+#isso-thread .isso-auth-section > div {
+  display: inline-block;
+  margin-right: 1em;
 }
 
-/* align buttons properly with the auth section */
 #isso-thread .isso-post-action {
-  display: flex !important;
-  gap: 1em;
-  margin-top: 1em;
-  align-items: center;
+  display: inline-block !important;
 }
 
-/* Make the entire form a flex container to align elements */
-#isso-thread .isso-postbox > .form-wrapper {
-  display: block;
+#isso-thread .isso-post-action > * {
+  margin-right: 1em;
 }
 
-/* If buttons are siblings of auth-section, make parent flex */
-#isso-thread .isso-postbox .auth-section,
-#isso-thread .isso-postbox .isso-auth-section {
-  margin-bottom: 0;
-}
-
-/* Ensure buttons are on same visual line */
-#isso-thread .isso-postbox {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
-
-#isso-thread .isso-postbox > div:has(.isso-auth-section) {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1em;
-  align-items: flex-end;
-}
-
-/* Alternative: if buttons are inside auth-section */
-#isso-thread .isso-auth-section input[type="submit"],
-#isso-thread .isso-auth-section input[type="button"],
-#isso-thread .isso-auth-section button {
-  align-self: flex-end;
-  margin-top: auto;
-}
-
-/* make input fields consistent width */
-#isso-thread input[type="text"],
-#isso-thread input[type="email"],
-#isso-thread input[name="website"] {
+/* Ensure textarea stays full width */
+#isso-thread .isso-textarea-wrapper textarea {
   width: 100%;
   box-sizing: border-box;
 }
-
-/* ensure proper spacing */
-#isso-thread .isso-auth-section label {
-  display: block;
-  margin-bottom: 0.3em;
-}
 </style>
 
-<!-- Small script to remove (optional) text after Isso loads -->
+<!-- Remove any remaining (optional) text -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
+  // Wait for Isso to fully render
   setTimeout(function() {
-    // Remove all instances of (optional) text
-    var elements = document.querySelectorAll('#isso-thread *');
-    elements.forEach(function(el) {
-      if (el.childNodes) {
-        el.childNodes.forEach(function(node) {
-          if (node.nodeType === 3 && node.textContent.includes('(optional)')) {
-            node.textContent = node.textContent.replace(/\s*\(optional\)\s*/g, '');
-          }
-        });
+    // Get all text in the isso thread
+    var walker = document.createTreeWalker(
+      document.getElementById('isso-thread'),
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode: function(node) {
+          return node.nodeValue.includes('(optional)') ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+        }
       }
-    });
+    );
     
-    // Also check labels specifically
-    var labels = document.querySelectorAll('#isso-thread label');
-    labels.forEach(function(label) {
-      if (label.textContent.includes('(optional)')) {
-        label.childNodes.forEach(function(node) {
-          if (node.nodeType === 3) {
-            node.textContent = node.textContent.replace(/\s*\(optional\)\s*/g, '');
-          }
-        });
-      }
+    var node;
+    var nodes = [];
+    while (node = walker.nextNode()) {
+      nodes.push(node);
+    }
+    
+    // Remove (optional) from all text nodes
+    nodes.forEach(function(node) {
+      node.nodeValue = node.nodeValue.replace(/\s*\(optional\)\s*/g, '');
     });
-  }, 500);
+  }, 1000);
 });
 </script>
