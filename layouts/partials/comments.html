@@ -54,30 +54,44 @@
 
 <!-- Remove any remaining (optional) text -->
 <script>
-window.addEventListener('load', function() {
-  // Wait for Isso to fully render
-  setTimeout(function() {
-    // Get all text in the isso thread
-    var walker = document.createTreeWalker(
-      document.getElementById('isso-thread'),
-      NodeFilter.SHOW_TEXT,
-      {
-        acceptNode: function(node) {
-          return node.nodeValue.includes('(optional)') ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
-        }
+function removeOptionalText() {
+  // Get all elements in isso thread
+  var elements = document.querySelectorAll('#isso-thread *');
+  
+  elements.forEach(function(el) {
+    // Check all child nodes
+    for (var i = 0; i < el.childNodes.length; i++) {
+      var node = el.childNodes[i];
+      // If it's a text node containing (optional)
+      if (node.nodeType === 3 && node.textContent.includes('(optional)')) {
+        node.textContent = node.textContent.replace(/\s*\(optional\)\s*/g, '');
       }
-    );
-    
-    var node;
-    var nodes = [];
-    while (node = walker.nextNode()) {
-      nodes.push(node);
     }
-    
-    // Remove (optional) from all text nodes
-    nodes.forEach(function(node) {
-      node.nodeValue = node.nodeValue.replace(/\s*\(optional\)\s*/g, '');
-    });
-  }, 2000);  // Increased from 1000 to 2000ms
+  });
+  
+  // Also check for any spans with optional class
+  var optionalSpans = document.querySelectorAll('#isso-thread .optional');
+  optionalSpans.forEach(function(span) {
+    span.style.display = 'none';
+  });
+}
+
+// Run when page loads
+window.addEventListener('load', function() {
+  // Run multiple times to catch dynamically added content
+  setTimeout(removeOptionalText, 500);
+  setTimeout(removeOptionalText, 1000);
+  setTimeout(removeOptionalText, 1500);
+  setTimeout(removeOptionalText, 2000);
+  
+  // Also watch for changes
+  var observer = new MutationObserver(function(mutations) {
+    removeOptionalText();
+  });
+  
+  var issoThread = document.getElementById('isso-thread');
+  if (issoThread) {
+    observer.observe(issoThread, { childList: true, subtree: true });
+  }
 });
 </script>
