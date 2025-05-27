@@ -5,20 +5,21 @@
   src="https://comments.misrule.me/js/embed.min.js">
 </script>
 
-<!-- our fix-up runs AFTER Isso injects its markup -->
+<!-- ─── post-inject clean-up ─────────────────────────────── -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  /* 1 – tidy labels */
+  /* remove "(optional)" & add red * */
   [
-    {id:'author',  required:true },
-    {id:'email',   required:true },
-    {id:'website', required:false}
+    { id:'author', required:true  },
+    { id:'email',  required:true  },
+    { id:'website',required:false }
   ].forEach(f => {
-      const lab = document.querySelector(
+      const label = document.querySelector(
         `label[for="isso-postbox-${f.id}"]`);
-      if(!lab) return;
-      lab.textContent = lab.textContent.replace(' (optional)','');
-      if (f.required) lab.textContent += ' *';
+      if (!label) return;
+      label.innerHTML = label.innerHTML.replace(/\s*\(optional\)/, '');
+      if (f.required) label.insertAdjacentHTML('beforeend',
+        ' <span class="isso-required">*</span>');
   });
 });
 </script>

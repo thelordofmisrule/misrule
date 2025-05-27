@@ -1,11 +1,27 @@
 {{ define "leftbar" }}
-<h2>All Articles</h2>
+<h2>All Works</h2>
+{{ $years := .Site.RegularPages.GroupByDate "2006" }}
 <ul>
-  {{ range where .Site.RegularPages "Type" "in" (slice "essays" "podcast" "poetry" "commentary") }}
-    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-  {{ end }}
+{{ range $years }}
+  <li>
+    <span class="accordion-year" style="cursor:pointer;">{{ .Key }}</span>
+    <ul>
+    {{ range .Pages.GroupByDate "January" }}
+      <li>
+        <span class="accordion-month" style="cursor:pointer;">{{ .Key }}</span>
+        <ul class="hidden">
+        {{ range .Pages }}
+          <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+        </ul>
+      </li>
+    {{ end }}
+    </ul>
+  </li>
+{{ end }}
 </ul>
 {{ end }}
+
 
 {{ define "main" }}
 <h2>Recent Posts</h2>

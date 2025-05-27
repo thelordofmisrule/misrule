@@ -40,6 +40,13 @@
       {{ block "rightbar" . }}{{ end }}
     </aside>
   </div>
-
+  <script>
+    /* simple accordion for All Works ─ toggles year/month groups */
+    document.addEventListener('click', e=>{
+      if(!e.target.matches('.accordion-year, .accordion-month')) return;
+      e.target.nextElementSibling?.classList.toggle('hidden');
+    });
+    </script>
+    
 </body>
 </html>
