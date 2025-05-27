@@ -116,13 +116,15 @@ window.addEventListener('load', function() {
   flex-wrap: wrap;
   gap: 1.5em;
   margin: 1em 0;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
-/* Input wrappers - CRITICAL FIX */
+/* Input wrappers - make them flex items */
 #isso-thread .isso-input-wrapper {
   display: block !important;
   position: relative;
+  flex: 1 1 30%;
+  min-width: 250px;
 }
 
 /* Labels - position above inputs */
@@ -157,11 +159,11 @@ window.addEventListener('load', function() {
   font-weight: bold;
 }
 
-/* Input fields - make them wider */
+/* Input fields - make them full width of their container */
 #isso-thread input[type="text"],
 #isso-thread input[type="email"],
 #isso-thread input[name="website"] {
-  width: 280px !important;
+  width: 100% !important;
   padding: 0.4em 0.6em;
   border: 1px solid #ccc;
   border-radius: 3px;
