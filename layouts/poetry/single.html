@@ -13,6 +13,8 @@
   <p class="meta">{{ .Params.form | title }} — {{ .Params.meter }}</p>
   <div class="poetry">{{ .Content }}</div>
 </article>
+
+{{ partial "comments.html" . }}   <!-- Isso comment thread -->
 {{ end }}
 
 {{ define "rightbar" }}
