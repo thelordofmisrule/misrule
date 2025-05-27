@@ -9,9 +9,10 @@
 
 <!-- minimal fix-ups loaded AFTER isso -->
 <style>
-/* hide optional text */
-#isso-thread span.optional {
-  display: none !important;
+/* hide optional text - target the actual text */
+#isso-thread .optional {
+  font-size: 0 !important;
+  color: transparent !important;
 }
 
 /* red asterisk on required */
@@ -19,5 +20,31 @@
 #isso-thread label[for="isso-postbox-email"]:after {
   content: " *";
   color: #c00;
+}
+
+/* align auth fields horizontally */
+#isso-thread .isso-auth-section {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+#isso-thread .isso-auth-section > * {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* align buttons with the form */
+#isso-thread .isso-post-action {
+  margin-top: 1em;
+}
+
+/* make input fields consistent width */
+#isso-thread input[type="text"],
+#isso-thread input[type="email"],
+#isso-thread input[name="website"] {
+  width: 100%;
+  box-sizing: border-box;
 }
 </style>
