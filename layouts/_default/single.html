@@ -1,0 +1,22 @@
+{{/*  _default/single.html  — applies to EVERY content type               */}}
+
+{{ define "leftbar" }}
+  <h2>Contents</h2>
+  <ul>
+    {{ range .Site.Sections }}
+      <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+    {{ end }}
+  </ul>
+{{ end }}
+
+{{ define "main" }}
+  <article>
+    {{ .Content }}
+  </article>
+
+  {{ partial "comments.html" . }}   <!-- Isso comment box -->
+{{ end }}
+
+{{ define "rightbar" }}
+  {{ partial "right-widget.html" . }}  <!-- your Twitter + blogroll block -->
+{{ end }}
