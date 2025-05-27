@@ -26,15 +26,15 @@
   color: #c00;
 }
 
-/* Make auth fields and buttons align horizontally */
+/* Make auth fields and buttons align horizontally with more spacing */
 #isso-thread .isso-auth-section {
   display: inline-block !important;
-  margin-right: 1.5em;
+  margin-right: 2em;
 }
 
 #isso-thread .isso-auth-section > div {
   display: inline-block;
-  margin-right: 1.5em;
+  margin-right: 2em;
 }
 
 #isso-thread .isso-post-action {
@@ -78,12 +78,6 @@ window.addEventListener('load', function() {
     nodes.forEach(function(node) {
       node.nodeValue = node.nodeValue.replace(/\s*\(optional\)\s*/g, '');
     });
-    
-    // Change email placeholder
-    var emailInput = document.querySelector('#isso-thread input[type="email"]');
-    if (emailInput && emailInput.placeholder) {
-      emailInput.placeholder = emailInput.placeholder.replace('johndoe@example.com', 'jdoe@example.com');
-    }
   }, 1000);
 });
 </script>
