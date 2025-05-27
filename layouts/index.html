@@ -34,19 +34,6 @@
 {{ end }}
 
 {{ define "rightbar" }}
-<div id="twitter-box">
-  <h2>Twitter</h2>
-  <a class="twitter-timeline" href="https://twitter.com/misruleBeMyGod">
-    Tweets by misruleBeMyGod
-  </a>
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</div>
-
-<h2>Blogroll</h2>
-<ul>
-  <li><a href="https://spandrell.ch">Bloody Shovel</a></li>
-  <li><a href="https://graymirror.substack.com">Gray Mirror</a></li>
-  <li><a href="https://astralcodexten.substack.com">Astral Codex Ten</a></li>
-  <li><a href="https://theworthyhouse.com">The Worthy House</a></li>
-</ul>
+  {{ partial "right-widget.html" . }}
 {{ end }}
+

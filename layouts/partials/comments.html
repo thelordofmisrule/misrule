@@ -1,25 +1,47 @@
 <section id="isso-thread"></section>
 
+<!-- Isso client -->
 <script
   data-isso="https://comments.misrule.me/"
   src="https://comments.misrule.me/js/embed.min.js">
 </script>
 
-<!-- ─── post-inject clean-up ─────────────────────────────── -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  /* remove "(optional)" & add red * */
-  [
-    { id:'author', required:true  },
-    { id:'email',  required:true  },
-    { id:'website',required:false }
-  ].forEach(f => {
-      const label = document.querySelector(
-        `label[for="isso-postbox-${f.id}"]`);
-      if (!label) return;
-      label.innerHTML = label.innerHTML.replace(/\s*\(optional\)/, '');
-      if (f.required) label.insertAdjacentHTML('beforeend',
-        ' <span class="isso-required">*</span>');
-  });
-});
-</script>
+<!-- inline fix-ups always loaded AFTER isso.css -->
+<style>
+/* hide (optional) */
+#isso-thread label span.option,
+#isso-thread label span.optional{display:none!important}
+
+/* red * on required labels */
+#isso-thread label[for="isso-postbox-author"]::after,
+#isso-thread label[for="isso-postbox-email"]::after{content:" *";color:#c00}
+
+/* grid the auth section */
+#isso-thread .isso-auth-section{display:flex!important;flex-wrap:wrap;gap:.8em 1.2em;align-items:center;margin-top:1em}
+
+/* each pair in one row */
+#isso-thread .isso-input-wrapper{display:flex!important;gap:.4em;align-items:center;margin:0}
+
+/* button row */
+#isso-thread .isso-submit{display:flex!important;gap:.6em;align-items:center;margin-top:1em}
+
+/* widths & padding */
+#isso-thread input[type="text"],
+#isso-thread input[type="email"],
+#isso-thread input[name="website"]{flex:0 0 16em;padding:.3em .6em;line-height:1}
+#isso-thread input[name="website"]{flex-basis:18em}
+#isso-thread input[type="submit"],
+#isso-thread input[type="button"]{font:600 .9rem/1 "IBM Plex Mono",monospace;padding:.5em 1.2em;border:1px solid #000;background:#f5f5f5;border-radius:4px;cursor:pointer}
+#isso-thread input[type="submit"]:hover,
+#isso-thread input[type="button"]:hover{background:#e0e0e0}
+
+/* compact box */
+#isso-thread{font-size:.95rem;line-height:1.4;max-width:42em;margin-top:2em}
+
+/* mobile: stack bars and comment controls */
+@media(max-width:640px){
+  #layout{grid-template-columns:1fr}
+  #leftbar,#rightbar{border:none;padding:0;margin-top:2em}
+  #isso-thread .isso-auth-section{flex-direction:column;align-items:flex-start}
+}
+</style>
