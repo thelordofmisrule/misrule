@@ -7,6 +7,60 @@
   src="https://comments.misrule.me/js/embed.min.js">
 </script>
 
+<!-- JavaScript to clean up Isso's markup -->
+<script>
+// Wait for Isso to load and clean up the form
+window.addEventListener('load', function() {
+  // Function to clean up Isso form
+  function cleanIssoForm() {
+    // Remove all instances of (optional) text
+    const optionalSpans = document.querySelectorAll('#isso-thread span.optional, #isso-thread span.required');
+    optionalSpans.forEach(span => {
+      span.style.display = 'none';
+      span.textContent = '';
+    });
+    
+    // Also check for text nodes containing (optional)
+    const walker = document.createTreeWalker(
+      document.getElementById('isso-thread'),
+      NodeFilter.SHOW_TEXT,
+      null,
+      false
+    );
+    
+    let node;
+    while(node = walker.nextNode()) {
+      if(node.textContent.includes('(optional)') || node.textContent.includes('(required)')) {
+        node.textContent = node.textContent.replace(/\s*\(optional\)\s*/g, '').replace(/\s*\(required\)\s*/g, '');
+      }
+    }
+    
+    // Ensure labels are properly formatted
+    const labels = document.querySelectorAll('#isso-thread label');
+    labels.forEach(label => {
+      // Clean up label text
+      if(label.textContent.includes('(')) {
+        label.childNodes.forEach(child => {
+          if(child.nodeType === 3) { // Text node
+            child.textContent = child.textContent.replace(/\s*\([^)]*\)\s*/g, '');
+          }
+        });
+      }
+    });
+  }
+  
+  // Run cleanup after a delay to ensure Isso has loaded
+  setTimeout(cleanIssoForm, 100);
+  
+  // Also run when new elements are added (for replies)
+  const observer = new MutationObserver(cleanIssoForm);
+  const issoThread = document.getElementById('isso-thread');
+  if(issoThread) {
+    observer.observe(issoThread, { childList: true, subtree: true });
+  }
+});
+</script>
+
 <!-- Comprehensive Isso styling fix -->
 <style>
 /* Reset and base styles */
@@ -56,32 +110,43 @@
   border-color: #666;
 }
 
-/* Auth section - make it a proper grid */
+/* Auth section - horizontal layout */
 #isso-thread .isso-auth-section {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1em;
-  margin: 1em 0;
-}
-
-/* Input wrappers */
-#isso-thread .isso-input-wrapper {
   display: flex !important;
-  flex-direction: column !important;
-  gap: 0.3em;
+  flex-wrap: wrap;
+  gap: 1.5em;
+  margin: 1em 0;
+  align-items: flex-end;
 }
 
-/* Labels */
-#isso-thread label {
+/* Input wrappers - CRITICAL FIX */
+#isso-thread .isso-input-wrapper {
+  display: block !important;
+  position: relative;
+}
+
+/* Labels - position above inputs */
+#isso-thread .isso-input-wrapper label {
+  display: block !important;
   font-size: 0.9rem;
   color: #555;
   font-weight: 500;
+  margin-bottom: 0.3em;
 }
 
-/* Hide optional/required spans */
+/* FORCE hide ALL optional/required text */
 #isso-thread label span.optional,
-#isso-thread label span.required {
+#isso-thread label span.required,
+#isso-thread label .optional,
+#isso-thread label .required,
+#isso-thread .isso-input-wrapper > span {
   display: none !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
 }
 
 /* Add red asterisk for required fields */
@@ -89,18 +154,21 @@
 #isso-thread label[for="isso-postbox-email"]::after {
   content: " *";
   color: #c00;
+  font-weight: bold;
 }
 
-/* Input fields */
+/* Input fields - make them wider */
 #isso-thread input[type="text"],
 #isso-thread input[type="email"],
 #isso-thread input[name="website"] {
-  width: 100%;
+  width: 200px !important;
   padding: 0.4em 0.6em;
   border: 1px solid #ccc;
   border-radius: 3px;
   font-size: 0.95rem;
   box-sizing: border-box;
+  display: block;
+  margin-top: 0.3em;
 }
 
 #isso-thread input[type="text"]:focus,
@@ -275,7 +343,15 @@
   }
   
   #isso-thread .isso-auth-section {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1em;
+  }
+  
+  #isso-thread input[type="text"],
+  #isso-thread input[type="email"],
+  #isso-thread input[name="website"] {
+    width: 100% !important;
   }
   
   #isso-thread .isso-comment {
