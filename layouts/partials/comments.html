@@ -9,10 +9,14 @@
 
 <!-- Isso styling fixes -->
 <style>
-/* Hide optional/required text */
+/* Hide optional/required text - more aggressive targeting */
 #isso-thread .optional,
-#isso-thread .required {
+#isso-thread .required,
+#isso-thread span.optional,
+#isso-thread span.required,
+#isso-thread label span {
   display: none !important;
+  visibility: hidden !important;
 }
 
 /* Add red asterisk to required fields */
@@ -20,18 +24,25 @@
 #isso-thread label[for="isso-postbox-email"]:after {
   content: " *";
   color: red;
+  display: inline !important;
+  visibility: visible !important;
 }
 
 /* Auth section layout */
-#isso-thread .auth-section {
-  display: flex;
+#isso-thread .auth-section,
+#isso-thread .isso-auth-section {
+  display: flex !important;
   gap: 1.5em;
   margin: 1em 0;
   flex-wrap: wrap;
+  align-items: flex-end; /* Align bottoms of input fields */
 }
 
 /* Make input wrappers take up space properly */
-#isso-thread .auth-section > div {
+#isso-thread .auth-section > div,
+#isso-thread .isso-auth-section > div,
+#isso-thread .input-wrapper,
+#isso-thread .isso-input-wrapper {
   flex: 1;
   min-width: 250px;
 }
@@ -42,22 +53,75 @@
 #isso-thread input[name="website"] {
   width: 100%;
   box-sizing: border-box;
+  padding: 0.4em 0.6em;
+  font-size: 0.95rem;
 }
 
 /* Ensure labels don't get covered */
-#isso-thread .auth-section label {
+#isso-thread .auth-section label,
+#isso-thread .isso-auth-section label {
   display: block;
   margin-bottom: 0.3em;
 }
 
+/* Button alignment */
+#isso-thread .post-action,
+#isso-thread .isso-post-action {
+  display: flex;
+  gap: 1em;
+  margin-top: 1em;
+  align-items: center;
+}
+
+/* Style the buttons */
+#isso-thread input[type="submit"],
+#isso-thread input[type="button"],
+#isso-thread button {
+  padding: 0.5em 1.2em;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 640px) {
-  #isso-thread .auth-section {
+  #isso-thread .auth-section,
+  #isso-thread .isso-auth-section {
     flex-direction: column;
+    align-items: stretch;
   }
   
-  #isso-thread .auth-section > div {
+  #isso-thread .auth-section > div,
+  #isso-thread .isso-auth-section > div {
     width: 100%;
   }
 }
 </style>
+
+<!-- Small JavaScript to clean up any remaining (optional) text -->
+<script>
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    // Find and remove any text nodes containing (optional)
+    var walker = document.createTreeWalker(
+      document.getElementById('isso-thread'),
+      NodeFilter.SHOW_TEXT,
+      null,
+      false
+    );
+    
+    var node;
+    var nodesToClean = [];
+    
+    while(node = walker.nextNode()) {
+      if(node.nodeValue && node.nodeValue.includes('(optional)')) {
+        nodesToClean.push(node);
+      }
+    }
+    
+    nodesToClean.forEach(function(node) {
+      node.nodeValue = node.nodeValue.replace(/\s*\(optional\)\s*/g, '');
+    });
+  }, 100);
+});
+</script>
