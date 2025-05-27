@@ -55,12 +55,45 @@
   flex: 1 1 250px;
 }
 
-/* align buttons with the form */
+/* align buttons properly with the auth section */
 #isso-thread .isso-post-action {
-  display: flex;
+  display: flex !important;
   gap: 1em;
   margin-top: 1em;
   align-items: center;
+}
+
+/* Make the entire form a flex container to align elements */
+#isso-thread .isso-postbox > .form-wrapper {
+  display: block;
+}
+
+/* If buttons are siblings of auth-section, make parent flex */
+#isso-thread .isso-postbox .auth-section,
+#isso-thread .isso-postbox .isso-auth-section {
+  margin-bottom: 0;
+}
+
+/* Ensure buttons are on same visual line */
+#isso-thread .isso-postbox {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+#isso-thread .isso-postbox > div:has(.isso-auth-section) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  align-items: flex-end;
+}
+
+/* Alternative: if buttons are inside auth-section */
+#isso-thread .isso-auth-section input[type="submit"],
+#isso-thread .isso-auth-section input[type="button"],
+#isso-thread .isso-auth-section button {
+  align-self: flex-end;
+  margin-top: auto;
 }
 
 /* make input fields consistent width */
@@ -82,10 +115,27 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   setTimeout(function() {
+    // Remove all instances of (optional) text
+    var elements = document.querySelectorAll('#isso-thread *');
+    elements.forEach(function(el) {
+      if (el.childNodes) {
+        el.childNodes.forEach(function(node) {
+          if (node.nodeType === 3 && node.textContent.includes('(optional)')) {
+            node.textContent = node.textContent.replace(/\s*\(optional\)\s*/g, '');
+          }
+        });
+      }
+    });
+    
+    // Also check labels specifically
     var labels = document.querySelectorAll('#isso-thread label');
     labels.forEach(function(label) {
-      if (label.innerHTML.includes('(optional)')) {
-        label.innerHTML = label.innerHTML.replace(/\s*\(optional\)\s*/g, '');
+      if (label.textContent.includes('(optional)')) {
+        label.childNodes.forEach(function(node) {
+          if (node.nodeType === 3) {
+            node.textContent = node.textContent.replace(/\s*\(optional\)\s*/g, '');
+          }
+        });
       }
     });
   }, 500);
