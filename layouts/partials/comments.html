@@ -11,92 +11,94 @@
   max-width: 100%;
 }
 
-/* Hide ALL optional text (from your original code - good) */
+/* Hide ALL optional text */
 #isso-thread .optional {
   display: none !important;
 }
 
-/* Red asterisk for required fields (from your original code - good) */
+/* Red asterisk for required fields */
 #isso-thread label[for="isso-postbox-author"]:after,
 #isso-thread label[for="isso-postbox-email"]:after {
   content: " *";
   color: #c00;
 }
 
-/* --- NEW CSS FOR INPUT FIELD SPACING --- */
+/* --- CSS FOR INPUT FIELD AND BUTTON SPACING (Desktop Focus) --- */
 
-/* Container for the author, email, (website) fields and post buttons */
+/* Main container for the row of inputs and buttons */
 #isso-thread .isso-postbox-footer {
-  display: flex; /* Use flexbox for alignment */
-  flex-wrap: wrap; /* Allow items to wrap to the next line on smaller screens */
-  align-items: flex-start; /* Align items to the start of the cross axis */
-  margin-bottom: 1em; /* Space below this whole section before the textarea (if not already there) */
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  align-items: flex-end; /* Align items based on their bottom edge, good for buttons and inputs */
+  margin-bottom: 1em;
+  gap: 1.5em; /* Default gap between auth section and buttons section */
 }
 
-/* The section containing Name, Email, Website fields */
+/* The section containing Name, Email, (Website) fields */
 #isso-thread .isso-auth-section {
-  display: flex; /* Make internal fields also use flex */
-  flex-wrap: wrap;
-  align-items: flex-start;
-  flex-grow: 1; /* Allow this section to take available space */
+  display: flex;
+  flex-grow: 2; /* This section will try to take up 2/3 of the available space */
+  flex-basis: 0; /* Essential for proper flex-grow distribution */
+  /* flex-wrap: nowrap; /* Generally keep auth fields on one line */
+  gap: 1.5em; /* Spacing BETWEEN input field wrappers (Author, Email) */
 }
 
-/* Individual input field containers (e.g., for author, email)
-   Isso typically wraps each label + input in a <p> tag or a <div>.
-   This targets those containers.
-*/
+/* Individual input field wrappers (e.g., for author, email) */
 #isso-thread .isso-auth-section > div,
-#isso-thread .isso-auth-section > p { /* Adjust if Isso uses a different wrapper */
-  margin-right: 1.5em; /* << ADJUST THIS for spacing BETWEEN input boxes (e.g., Name and Email) */
-  margin-bottom: 0.75em; /* Space below each field if they wrap */
-}
-
-/* Ensure the last input field in the auth section doesn't have extra margin
-   if it's the last one before the buttons or wrapping. */
-#isso-thread .isso-auth-section > div:last-of-type,
-#isso-thread .isso-auth-section > p:last-of-type {
-  margin-right: 0;
+#isso-thread .isso-auth-section > p {
+  flex-grow: 1; /* Each field will grow equally within .isso-auth-section */
+  flex-basis: 0; /* Distribute space evenly initially */
+  min-width: 150px; /* Adjust if necessary, prevents fields from becoming too narrow */
 }
 
 /* Style the labels within the auth section */
 #isso-thread .isso-auth-section label {
-  display: block; /* Label on its own line above the input */
-  margin-bottom: 0.25em;
+  display: block;
+  margin-bottom: 0.3em;
   font-size: 0.9em;
-  /* font-weight: bold; /* Optional: if you want bolder labels */
+  line-height: 1.2; /* Added for consistent spacing */
 }
 
 /* Style the input elements themselves */
 #isso-thread .isso-auth-section input[type="text"],
 #isso-thread .isso-auth-section input[type="email"],
 #isso-thread .isso-auth-section input[type="url"] {
-  padding: 6px 8px;
+  padding: 8px 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
-  width: 200px; /* << ADJUST or set to 'auto' or '100%' within its flex item if needed */
+  width: 100%; /* Make input take full width of its parent (the p or div) */
   box-sizing: border-box;
+  font-size: 1em; /* Ensure consistent font size with buttons */
 }
 
 /* The section for Post and Preview buttons */
 #isso-thread .isso-post-action {
   display: flex;
-  align-items: center; /* Vertically align buttons if text causes height differences */
-  margin-left: auto; /* Pushes buttons to the right if auth fields don't take all space */
-  padding-top: 0.5em; /* Align with fields better if labels make fields taller */
+  flex-grow: 1; /* This section will try to take up 1/3 of the available space */
+  flex-basis: 0; /* Essential for proper flex-grow distribution */
+  align-items: center; /* Vertically align buttons if they have different heights */
+  justify-content: flex-start; /* Align buttons to the start of this flex container */
+  gap: 1em; /* Space between buttons */
+  /* padding-top: 0; /* Removed specific padding-top, relying on align-items: flex-end on parent */
 }
 
-#isso-thread .isso-post-action > * {
-  margin-left: 1em; /* Space between buttons */
-}
-#isso-thread .isso-post-action > *:first-child {
-  margin-left: 0; /* No left margin for the first button in this group */
+/* Ensure buttons have a consistent height matching inputs if possible */
+#isso-thread .isso-post-action input[type="submit"],
+#isso-thread .isso-post-action button {
+    padding: 8px 12px; /* Match input padding for better vertical alignment */
+    font-size: 1em; /* Match input font size */
+    line-height: 1.5; /* Adjust as needed to match input height */
+    border: 1px solid #ccc; /* Example border, style as needed */
+    border-radius: 3px;
+    cursor: pointer;
 }
 
 
 /* Ensure textarea stays full width and below other inputs */
 #isso-thread .isso-textarea-wrapper {
-  clear: both; /* Ensure it drops below the flex items if they wrap weirdly, though flex should handle it */
-  padding-top: 0.5em; /* Add some space above the textarea */
+  /* clear: both; /* May not be needed with flex-wrap on parent */
+  padding-top: 0.5em;
+  width: 100%; /* Ensure it takes full width after wrapping */
 }
 
 #isso-thread .isso-textarea-wrapper textarea {
@@ -106,67 +108,40 @@
   border: 1px solid #ccc;
   border-radius: 3px;
 }
-
-/* --- END NEW CSS --- */
-
 </style>
 
 <script>
-// ... your existing JavaScript to remove (optional) and set placeholder ...
-// Ensure this script runs after Isso has loaded its content.
-// The MutationObserver is a good approach for this.
-
 function removeOptionalTextAndSetPlaceholder() {
-  // Get all elements in isso thread
   var elements = document.querySelectorAll('#isso-thread *');
-  
   elements.forEach(function(el) {
-    // Check all child nodes
     for (var i = 0; i < el.childNodes.length; i++) {
       var node = el.childNodes[i];
-      // If it's a text node containing (optional)
       if (node.nodeType === 3 && node.textContent.includes('(optional)')) {
         node.textContent = node.textContent.replace(/\s*\(optional\)\s*/g, '');
       }
     }
   });
-  
-  // Also check for any spans with optional class
   var optionalSpans = document.querySelectorAll('#isso-thread .optional');
   optionalSpans.forEach(function(span) {
     span.style.display = 'none';
   });
-  
-  // Change email placeholder
-  var emailInput = document.querySelector('#isso-thread input[type="email"]#isso-postbox-email'); // Made selector more specific
-  if (emailInput && emailInput.placeholder.toLowerCase().includes('email')) { // Check if placeholder needs changing
+  var emailInput = document.querySelector('#isso-thread input[type="email"]#isso-postbox-email');
+  if (emailInput && emailInput.placeholder.toLowerCase().includes('email')) {
     emailInput.placeholder = 'jdoe@example.com (optional, for gravatar/notifications)';
   }
-
-  // Change author placeholder
-  var authorInput = document.querySelector('#isso-thread input[type="text"]#isso-postbox-author'); // Made selector more specific
+  var authorInput = document.querySelector('#isso-thread input[type="text"]#isso-postbox-author');
   if (authorInput && authorInput.placeholder.toLowerCase().includes('name')) {
      authorInput.placeholder = 'Name';
   }
 }
-
-// Run when page loads and observe changes
 window.addEventListener('load', function() {
   var issoThread = document.getElementById('isso-thread');
-  
   if (issoThread) {
-    // Initial run
-    setTimeout(removeOptionalTextAndSetPlaceholder, 500); // Give Isso a moment to inject
-    setTimeout(removeOptionalTextAndSetPlaceholder, 1500); // And another for good measure
-
-    // Observe for dynamic changes
+    setTimeout(removeOptionalTextAndSetPlaceholder, 500);
+    setTimeout(removeOptionalTextAndSetPlaceholder, 1500);
     var observer = new MutationObserver(function(mutations) {
       removeOptionalTextAndSetPlaceholder();
-      // You might want to disconnect the observer after a few successful runs
-      // if you are sure the content won't change further, to save resources.
-      // observer.disconnect(); 
     });
-    
     observer.observe(issoThread, { childList: true, subtree: true });
   }
 });
