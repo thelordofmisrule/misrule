@@ -6,107 +6,90 @@
 </script>
 
 <style>
-/* Keep original thread width */
 #isso-thread {
   max-width: 100%;
+  /* overflow-x: hidden; /* We'll try to avoid needing this by making children behave */
 }
 
 /* Hide ALL optional text */
-#isso-thread .optional {
-  display: none !important;
-}
+#isso-thread .optional { display: none !important; }
 
 /* Red asterisk for required fields */
 #isso-thread label[for="isso-postbox-author"]:after,
-#isso-thread label[for="isso-postbox-email"]:after {
-  content: " *";
-  color: #c00;
-}
-
-/* --- CSS FOR INPUT FIELD AND BUTTON SPACING (Desktop Focus) --- */
+#isso-thread label[for="isso-postbox-email"]:after { content: " *"; color: #c00; }
 
 /* Main container for the row of inputs and buttons */
 #isso-thread .isso-postbox-footer {
   display: flex;
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
-  align-items: flex-end; /* Align items based on their bottom edge, good for buttons and inputs */
+  flex-wrap: wrap; /* Key for responsiveness: items will wrap to next line if space runs out */
+  align-items: flex-end; /* Align bottom edges of auth-section and post-action */
   margin-bottom: 1em;
-  gap: 1.5em; /* Default gap between auth section and buttons section */
+  gap: 1.5em; /* Gap between the auth fields block and the buttons block when they are on the same line */
 }
 
 /* The section containing Name, Email, (Website) fields */
 #isso-thread .isso-auth-section {
-  display: flex;
-  flex-grow: 2; /* This section will try to take up 2/3 of the available space */
-  flex-basis: 0; /* Essential for proper flex-grow distribution */
-  /* flex-wrap: nowrap; /* Generally keep auth fields on one line */
-  gap: 1.5em; /* Spacing BETWEEN input field wrappers (Author, Email) */
+  display: flex; /* Children (input wrappers) will be flex items */
+  /* flex-grow, flex-shrink, flex-basis control how this section behaves in the .isso-postbox-footer */
+  flex: 2 1 55%; /* Shorthand: flex-grow: 2, flex-shrink: 1, flex-basis: 55% (of parent) */
+  /* This means it tries to be 55% wide, can grow x2 factor, can shrink x1 factor */
+  gap: 1em; /* Spacing BETWEEN input field wrappers (Author, Email) */
+  min-width: 250px; /* Don't allow this section to become too small before wrapping */
 }
 
-/* Individual input field wrappers (e.g., for author, email) */
+/* Individual input field wrappers */
 #isso-thread .isso-auth-section > div,
 #isso-thread .isso-auth-section > p {
-  flex-grow: 1; /* Each field will grow equally within .isso-auth-section */
-  flex-basis: 0; /* Distribute space evenly initially */
-  min-width: 150px; /* Adjust if necessary, prevents fields from becoming too narrow */
+  flex-grow: 1; /* Each field will grow equally to fill .isso-auth-section */
+  flex-basis: 0; /* Distribute space evenly initially based on grow factor */
+  min-width: 120px; /* Min width for individual input fields before they cause issues */
 }
 
-/* Style the labels within the auth section */
+/* Style the labels */
 #isso-thread .isso-auth-section label {
-  display: block;
-  margin-bottom: 0.3em;
-  font-size: 0.9em;
-  line-height: 1.2; /* Added for consistent spacing */
+  display: block; margin-bottom: 0.3em; font-size: 0.9em; line-height: 1.2;
 }
 
-/* Style the input elements themselves */
+/* Style the input elements */
 #isso-thread .isso-auth-section input[type="text"],
 #isso-thread .isso-auth-section input[type="email"],
 #isso-thread .isso-auth-section input[type="url"] {
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  width: 100%; /* Make input take full width of its parent (the p or div) */
-  box-sizing: border-box;
-  font-size: 1em; /* Ensure consistent font size with buttons */
+  padding: 8px 10px; border: 1px solid #ccc; border-radius: 3px;
+  width: 100%; box-sizing: border-box; font-size: 1em;
 }
 
 /* The section for Post and Preview buttons */
 #isso-thread .isso-post-action {
-  display: flex;
-  flex-grow: 1; /* This section will try to take up 1/3 of the available space */
-  flex-basis: 0; /* Essential for proper flex-grow distribution */
-  align-items: center; /* Vertically align buttons if they have different heights */
-  justify-content: flex-start; /* Align buttons to the start of this flex container */
-  gap: 1em; /* Space between buttons */
-  /* padding-top: 0; /* Removed specific padding-top, relying on align-items: flex-end on parent */
+  display: flex; /* Children (buttons) will be flex items */
+  /* flex-grow, flex-shrink, flex-basis for this section */
+  flex: 1 1 35%; /* Shorthand: flex-grow: 1, flex-shrink: 1, flex-basis: 35% (of parent) */
+  /* This means it tries to be 35% wide, can grow x1 factor, can shrink x1 factor */
+  align-items: center; /* Vertically center buttons within this container */
+  gap: 0.75em; /* Space between the buttons themselves */
+  min-width: 160px; /* Minimum width for the button area (e.g. 2 buttons * 70px + gap) */
 }
 
-/* Ensure buttons have a consistent height matching inputs if possible */
+/* Ensure buttons within .isso-post-action are of THE SAME size */
 #isso-thread .isso-post-action input[type="submit"],
 #isso-thread .isso-post-action button {
-    padding: 8px 12px; /* Match input padding for better vertical alignment */
-    font-size: 1em; /* Match input font size */
-    line-height: 1.5; /* Adjust as needed to match input height */
-    border: 1px solid #ccc; /* Example border, style as needed */
-    border-radius: 3px;
-    cursor: pointer;
+  flex-grow: 1; /* Each button will take equal space within .isso-post-action */
+  flex-basis: 0; /* Start from 0 for equal distribution */
+  width: 0; /* Let flex-basis and flex-grow determine width */
+  padding: 8px 6px; /* Adjust padding for text fit */
+  font-size: 0.9em;
+  line-height: 1.3;
+  border: 1px solid #ccc; border-radius: 3px; cursor: pointer;
+  text-align: center;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; /* Handle long text */
 }
 
-
-/* Ensure textarea stays full width and below other inputs */
+/* Textarea wrapper and textarea */
 #isso-thread .isso-textarea-wrapper {
-  /* clear: both; /* May not be needed with flex-wrap on parent */
-  padding-top: 0.5em;
-  width: 100%; /* Ensure it takes full width after wrapping */
+  padding-top: 0.5em; width: 100%; box-sizing: border-box;
 }
-
 #isso-thread .isso-textarea-wrapper textarea {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #ccc; border-radius: 3px;
+  min-height: 100px;
 }
 </style>
 
